@@ -1,0 +1,422 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+/* Desert After Dark - GIT 414 Deliverable 3 responsive layout */
+@layer reset, base, layout, components, utilities, states, overrides, print;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  body, h1, h2, h3, p, ul { margin: 0; }
+}
+
+@layer base {
+  :root {
+    /* Colors */
+    --color-deep-night: #11131A;
+    --color-dusk-surface: #1B1C24;
+    --color-rock-umber: #2B2522;
+    --color-prickly-pear: #D97BB4;
+    --color-ocotillo: #F08A4B;
+    --color-palo-verde: #8DBF7A;
+    --color-desert-sand: #D8B98A;
+
+    /* Supporting text colors and semantic uses */
+    --color-text: #EDE8E1;
+    --color-muted: #C5BDB2;
+    --color-background: var(--color-deep-night);
+    --color-surface: var(--color-dusk-surface);
+    --color-link: var(--color-desert-sand);
+    --color-focus: var(--color-desert-sand);
+
+    /* Typography and spacing */
+    --font-body: 'Outfit', Arial, Helvetica, sans-serif;
+    --font-size-body: 1rem;
+    --space-small: 0.5rem;
+    --space-medium: 1rem;
+    --space-large: 1.5rem;
+    --space-section: 3rem;
+    --radius-small: 0.375rem;
+    --radius-card: 0.75rem;
+    --focus-outline: 3px solid var(--color-focus);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100vh;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Figtree', Arial, Helvetica, sans-serif;
+    line-height: 1.2;
+  }
+
+  h1 { font-size: clamp(2rem, 3.5vw, 2.75rem); }
+  h2 { font-size: clamp(1.5rem, 2.2vw, 1.75rem); }
+  h3 { font-size: 1.25rem; }
+  h2, h3 { margin-block-end: var(--space-small); }
+  p { margin-bottom: var(--space-medium); }
+  a { color: var(--color-link); }
+}
+
+@layer layout {
+  .container {
+    inline-size: 100%;
+    max-inline-size: 70rem;
+    margin-inline: auto;
+    padding-inline: var(--space-medium);
+  }
+
+  main { flex: 1; }
+
+  .header-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-medium);
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .section { margin-block-end: var(--space-section); }
+
+  .animal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-medium);
+  }
+
+  /* Medium widths: two featured cards fit side by side. */
+  @media (min-width: 44rem) and (max-width: 63.99rem) {
+    .animal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Wider layouts have room for three image-over-text cards. */
+  @media (min-width: 64rem) {
+    .animal-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .header-layout { align-items: flex-start; }
+  }
+}
+
+@layer components {
+  .site-header, .site-footer {
+    padding-block: var(--space-large);
+    background: var(--color-surface);
+  }
+
+  .site-header {
+    border-bottom: 1px solid var(--color-rock-umber);
+  }
+
+  .site-footer {
+    margin-top: var(--space-section);
+    border-top: 1px solid var(--color-rock-umber);
+  }
+
+  .site-footer p { font-size: 0.875rem; }
+
+  .site-name {
+    font-family: 'Figtree', Arial, Helvetica, sans-serif;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1vw, var(--space-medium));
+    font-size: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  #menuCheckbox, #menuToggle > span { display: none; }
+
+  @media (max-width: 47.99rem) {
+    #menuToggle { position: relative; z-index: 10; }
+
+    #menuCheckbox {
+      display: block;
+      position: absolute;
+      inset-block-start: -0.5rem;
+      inset-inline-start: -0.5rem;
+      inline-size: 3rem;
+      block-size: 2.75rem;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    #menuToggle > span {
+      display: block;
+      position: relative;
+      inline-size: 2rem;
+      block-size: 0.25rem;
+      margin-block-end: 0.3rem;
+      border-radius: var(--radius-small);
+      background: var(--color-text);
+      z-index: 2;
+      transition: transform 200ms ease, opacity 200ms ease;
+    }
+
+    #menuCheckbox:focus-visible ~ span:first-of-type {
+      outline: var(--focus-outline);
+      outline-offset: 6px;
+    }
+
+    #menuCheckbox:checked ~ span:first-of-type {
+      transform: translateY(0.55rem) rotate(45deg);
+    }
+
+    #menuCheckbox:checked ~ span:nth-of-type(2) {
+      opacity: 0;
+    }
+
+    #menuCheckbox:checked ~ span:last-of-type {
+      transform: translateY(-0.55rem) rotate(-45deg);
+    }
+
+    #menu {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      z-index: 1;
+      inline-size: min(20rem, 100vw);
+      block-size: 100vh;
+      padding: 5rem var(--space-large) var(--space-large);
+      flex-direction: column;
+      flex-wrap: nowrap;
+      overflow-y: auto;
+      background: var(--color-surface);
+      border-inline-start: 1px solid var(--color-rock-umber);
+      box-shadow: 0 0 1rem #0008;
+      visibility: hidden;
+      transform: translateX(100%);
+      transition: transform 200ms ease, visibility 200ms;
+    }
+
+    #menuCheckbox:checked ~ #menu {
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  .button {
+    --button-background: var(--color-ocotillo);
+    --button-text: var(--color-deep-night);
+    display: inline-block;
+    padding: var(--space-small) var(--space-large);
+    border: 1px solid var(--button-background);
+    border-radius: var(--radius-small);
+    background: var(--button-background);
+    color: var(--button-text);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .animal-card {
+    display: grid;
+    grid-template-columns: minmax(6rem, 1fr) minmax(0, 2fr);
+    overflow: hidden;
+    border: 1px solid var(--color-rock-umber);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  /* Medium: show the first two animals, with image beside text. */
+  @media (min-width: 44rem) and (max-width: 63.99rem) {
+    .animal-card:nth-child(3) { display: none; }
+  }
+
+  /* Wide: show all three cards with the image above the text. */
+  @media (min-width: 64rem) {
+    .animal-card { display: block; }
+  }
+
+  .animal-card__media {
+    display: grid;
+    place-items: center;
+    min-block-size: 8rem;
+    padding: var(--space-small);
+    background: var(--color-rock-umber);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .animal-card__body { padding: var(--space-medium); }
+  .animal-card__body p { margin-bottom: 0; }
+
+  .category-tag {
+    display: inline-block;
+    margin-bottom: var(--space-small);
+    padding-block: 0.1rem;
+    padding-inline: 0.3rem;
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius-small);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .fun-fact {
+    --fact-accent: var(--color-palo-verde);
+    container-type: inline-size;
+    padding: var(--space-large);
+    border: 1px solid var(--fact-accent);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  /* The default stays stacked if container queries aren't supported. */
+  .fun-fact__layout {
+    display: grid;
+    gap: var(--space-small);
+  }
+
+  @container (min-width: 34rem) {
+    .fun-fact__layout {
+      grid-template-columns: fit-content(12rem) minmax(0, 1fr);
+      gap: var(--space-large);
+      align-items: center;
+    }
+  }
+
+  .fun-fact h2 {
+    font-size: 1.25rem;
+    color: var(--fact-accent);
+    margin-block-end: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-inline-start: var(--space-medium);
+    inset-block-start: -5rem;
+    padding: var(--space-small);
+    background: var(--color-desert-sand);
+    color: var(--color-deep-night);
+  }
+}
+
+@layer utilities {
+  .u-muted { color: var(--color-muted); }
+  .u-max-text { max-width: 60ch; }
+  .u-mb-0 { margin-bottom: 0; }
+}
+
+@layer states {
+  a:hover { text-decoration: underline; }
+
+  .button:hover {
+    background: var(--color-deep-night);
+    color: var(--color-ocotillo);
+    text-decoration: none;
+  }
+
+  .button:active {
+    background: var(--color-desert-sand);
+    color: var(--color-deep-night);
+  }
+
+  .nav-link[aria-current="page"] {
+    border-bottom: 2px solid var(--color-link);
+    font-weight: bold;
+  }
+
+  :focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: 3px;
+  }
+
+  .skip-link:focus-visible {
+    inset-block-start: var(--space-small);
+  }
+
+  /* Pink indicates hover on links and animal cards. */
+  @media (hover: hover) {
+    .animal-card:hover {
+      border-color: var(--color-prickly-pear);
+    }
+
+    .animal-card:hover h3,
+    .site-name:hover,
+    .nav-link:hover {
+      color: var(--color-prickly-pear);
+    }
+  }
+
+  /* Brief touch feedback for actual links. */
+  .site-name:active,
+  .nav-link:active {
+    color: var(--color-prickly-pear);
+  }
+
+  @media (prefers-contrast: more) {
+    .animal-card, .fun-fact {
+      border-color: var(--color-desert-sand);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #menu, #menuToggle > span {
+      transition: none;
+    }
+  }
+}
+
+@layer overrides {
+  /* Reserved for future exceptions; none needed in this preview. */
+}
+
+@layer print {
+  @media print {
+    body { background: white; color: black; font-size: 11pt; }
+    a { color: black; }
+    .site-header nav, .button, .skip-link, .animal-card__media { display: none; }
+    .site-header, .site-footer { background: white; color: black; border: 0; }
+    .hero { padding-block: 1rem; min-block-size: auto; }
+    .section { margin-bottom: 1rem; }
+    .animal-grid { display: block; }
+    .animal-card {
+      margin-bottom: 1rem;
+      border-color: #999;
+      background: white;
+      color: black;
+      break-inside: avoid;
+    }
+    .fun-fact {
+      border-color: #999;
+      background: white;
+      color: black;
+      break-inside: avoid;
+    }
+    .category-tag, .fun-fact h2, .u-muted { color: black; }
+    .category-tag { border-color: #999; }
+  }
+}
