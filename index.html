@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A CSS architecture preview for Desert After Dark, a website about nocturnal wildlife in the Sonoran Desert.">
+  <title>Desert After Dark | CSS Architecture Preview</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-layout">
+      <a class="site-name" href="index.html" aria-current="page">Desert After Dark</a>
+      <nav aria-label="Main navigation">
+        <div id="menuToggle">
+          <input type="checkbox" id="menuCheckbox" aria-label="Toggle navigation menu" aria-controls="menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <ul class="nav-list" id="menu">
+            <li><a class="nav-link" href="#">Nocturnal Natives</a></li>
+            <li><a class="nav-link" href="#">Adaptations</a></li>
+            <li><a class="nav-link" href="#">Challenges</a></li>
+            <li><a class="nav-link" href="#">Exploring the Night</a></li>
+            <li><a class="nav-link" href="#">About</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <h1 id="page-title">Desert After Dark</h1>
+      <p class="u-max-text">An educational website about the nocturnal wildlife of the Sonoran Desert. This is a small preview for the CSS architecture, not the finished homepage.</p>
+      <a class="button" href="#animals">Explore animals</a>
+    </section>
+
+    <section id="animals" class="section" aria-labelledby="animals-title">
+      <h2 id="animals-title">Featured Animals</h2>
+      <p class="u-muted">Animal details and photos will be added after research.</p>
+
+      <div class="animal-grid">
+        <article class="animal-card">
+          <div class="animal-card__media" aria-hidden="true">Photo placeholder</div>
+          <div class="animal-card__body">
+            <span class="category-tag">Category TBD</span>
+            <h3>Animal 1</h3>
+            <p>Species and description to be added.</p>
+          </div>
+        </article>
+        <article class="animal-card">
+          <div class="animal-card__media" aria-hidden="true">Photo placeholder</div>
+          <div class="animal-card__body">
+            <span class="category-tag">Category TBD</span>
+            <h3>Animal 2</h3>
+            <p>Species and description to be added.</p>
+          </div>
+        </article>
+        <article class="animal-card">
+          <div class="animal-card__media" aria-hidden="true">Photo placeholder</div>
+          <div class="animal-card__body">
+            <span class="category-tag">Category TBD</span>
+            <h3>Animal 3</h3>
+            <p>Species and description to be added.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside id="fact" class="fun-fact" aria-labelledby="fact-title">
+      <div class="fun-fact__layout">
+        <h2 id="fact-title">Fun Fact</h2>
+        <p class="u-mb-0">This callout will highlight a researched wildlife fact in the finished website.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="u-mb-0">Desert After Dark — GIT 414 CSS architecture preview</p>
+    </div>
+  </footer>
+</body>
+</html>
